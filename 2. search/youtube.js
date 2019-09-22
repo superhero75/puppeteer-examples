@@ -1,27 +1,24 @@
 /**
- * @name Youtube search
+ * @name ping search
  *
- * @desc  Looks for Fleetwood Mac's "Dreams" video on youtube.com and clicks on the third video.
- * Waits for 5 seconds for the video to load.
+ * @desc  check ping.pe for ip access
  */
 const puppeteer = require('puppeteer')
 const screenshot = 'youtube_fm_dreams_video.png'
+const fs = require("fs");
 try {
   (async () => {
     const browser = await puppeteer.launch()
     const page = await browser.newPage()
-    await page.goto('https://youtube.com')
-    await page.type('#search', 'Fleetwood Mac Dreams')
-    await page.click('button#search-icon-legacy')
-    await page.waitForSelector('ytd-thumbnail.ytd-video-renderer')
-    await page.screenshot({path: 'youtube_fm_dreams_list.png'})
-    const videos = await page.$$('ytd-thumbnail.ytd-video-renderer')
-    await videos[2].click()
-    await page.waitForSelector('.html5-video-container')
-    await page.waitFor(5000)
-    await page.screenshot({ path: screenshot })
+  /*  await page.setViewport({ width: 1980, height: 1080 }) */
+    await page.goto('http://port.ping.pe')
+    await page.type('#input_ip', '54.180.15.29:22')
+    await page.click('input[type="submit" i]')
+    await page.waitFor(20000)
+    
+  const html = await page.content();
+	fs.writeFileSync("index.html", html);
     await browser.close()
-    console.log('See screenshot: ' + screenshot)
   })()
 } catch (err) {
   console.error(err)
