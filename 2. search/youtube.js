@@ -1,10 +1,8 @@
 /**
  * @name ping search
- *
  * @desc  check ping.pe for ip access
  */
 const puppeteer = require('puppeteer')
-const screenshot = 'youtube_fm_dreams_video.png'
 const fs = require("fs");
 try {
   (async () => {
